@@ -32,6 +32,61 @@ export class PlanetComponent implements OnInit {
 			source: orthoSource,
 		});
 		view.addLayer(orthoLayer);
+
+		const optionsGeoJsonParser = {
+			in: {
+				crs: 'EPSG:4326',
+			},
+			out: {
+				crs: view.tileLayer.extent.crs,
+				buildExtent: true,
+			}
+		};
+
+		const geojson = {
+			type: 'FeatureCollection',
+			features: [{
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					ccoordinates: [2, 48]
+				},
+				properties: {
+					id: 1,
+					name: 'test'
+				}
+			}]
+		};
+
+		const pointSymbol = {
+			scale: 1,
+			icon: '/assets/drone.png'
+		};
+
+		itowns.GeoJsonParser.parse(geojson, optionsGeoJsonParser).then((features) => {
+			const eventSource = new itowns.FileSource({ features });
+
+			const eventStyle = new itowns.Style({
+				fill: {
+					pattern: '/assets/drone.png',
+					color: 'red'
+				},
+				point: {
+					color: 'white',
+					line: 'red',
+					radius: 10,
+				}
+			});
+
+			const eventLayer = new itowns.ColorLayer('event', {
+				name: 'event',
+				transparent: true,
+				source: eventSource,
+				style: eventStyle,
+			});
+
+			view.addLayer(eventLayer);
+		});
 	}
 
 }

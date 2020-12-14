@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
 	constructor(private arango: ArangoService) { }
 
 	async ngOnInit(): Promise<void> {
-		await this.arango.auth('root', 'scala');
+		/*await this.arango.auth('root', 'scala');
 		const res = await this.arango.getRecords();
-		console.log(res);
+		console.log(res);*/
 	}
 }
