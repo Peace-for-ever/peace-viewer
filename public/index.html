@@ -41,14 +41,17 @@
       TWEEN.start();
 
       let data = [];
-      for(let i = -180; i < 180; i++)
-      {
-        data.push(i, 0, 0.3);
+      function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
       }
-      for(let i = -180; i < 180; i++)
+
+      for(let i = 0; i < 500; i++)
       {
-        data.push(0, i, 0.2);
+        let lat = getRandomArbitrary(-180, 180);
+        let lon = getRandomArbitrary(-180, 180);
+        data.push(lat, lon, getRandomArbitrary(0, 0.5));
       }
+
       globe.addData(data, {
         format: 'magnitude',
         name: 'test'
