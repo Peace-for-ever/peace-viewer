@@ -1,7 +1,7 @@
 {
   "name": "peace-viewer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Visualize events on a 3d globe",
   "main": "index.js",
   "scripts": {
     "serve": "node index.js",
