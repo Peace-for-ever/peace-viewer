@@ -1,0 +1,10 @@
+version: '2.1'
+services:
+  globe:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: globe
+    ports:
+      - 3000:3000
