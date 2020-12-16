@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>WebGL Globe</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000000 url(/globe/loading.gif) center center no-repeat;
+        color: #ffffff;
+        font-family: sans-serif;
+        font-size: 13px;
+        line-height: 20px;
+        height: 100%;
+      }
+
+
+    </style>
+  </head>
+  <body>
+
+  <div id="container"></div>
+
+  <script type="text/javascript" src="/globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="/globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="/globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="/globe/globe.js"></script>
+  <script type="text/javascript">
+
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+
+      var container = document.getElementById('container');
+      var globe = new DAT.Globe(container);
+      
+      TWEEN.start();
+
+      let data = [];
+      for(let i = -180; i < 180; i++)
+      {
+        data.push(i, 0, 0.3);
+      }
+      for(let i = -180; i < 180; i++)
+      {
+        data.push(0, i, 0.2);
+      }
+      globe.addData(data, {
+        format: 'magnitude',
+        name: 'test'
+      });
+      globe.createPoints();
+      globe.animate();
+    }
+
+  </script>
+
+  </body>
+
+</html>
