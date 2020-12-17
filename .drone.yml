@@ -9,7 +9,7 @@ steps:
   image: mhart/alpine-node
   commands:
     - npm install
-    - npm build
+    - npm run build
   when:
     branch:
     - main
