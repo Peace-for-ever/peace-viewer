@@ -36,27 +36,26 @@
     } else {
 
       var container = document.getElementById('container');
-      var globe = new DAT.Globe(container, {
-        animated: false
-      });
+      var globe = new DAT.Globe(container);
       
       TWEEN.start();
 
-      let socket = new WebSocket("ws://localhost:3000/events");
-      socket.onopen = function(e) {
-        console.info("[open] Connection established");
-      };
+      setTimeout(() => {
+        let socket = new WebSocket("ws://localhost:3000/events");
+        socket.onopen = function(e) {
+          console.info("[open] Connection established");
+        };
 
-      socket.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        globe.addData(data, {
-          format: 'magnitude',
-          name: 'test'
-        });
-        globe.createPoints();
-        globe.animate();
-      };
-      
+        socket.onmessage = function(event) {
+          const data = JSON.parse(event.data);
+          globe.addData(data, {
+            format: 'magnitude',
+            name: 'test'
+          });
+          globe.createPoints();
+        };
+      }, 1000);
+
       globe.animate();
     }
 
