@@ -5,16 +5,16 @@ const eventsWs = expressWs.getWss('/');
 const { Kafka } = require('kafkajs');
 const { Database, aql } = require("arangojs");
 
-const topicName = process.env.kafkaTopic || 'records';
+const topicName = process.env.kafkaRecordTopic;
 
 const db = new Database({
-	url: "http://localhost:8529",
-	auth: { username: "root", password: "scala" },
+	url: process.env.arangoHost,
+	auth: { username: process.env.arangoUser, password: process.env.arangoPassword },
 });
 const collection = db.collection(topicName);
 
 const kafka = new Kafka({
-	brokers: [process.env.kafkaHost || 'localhost:9092']
+	brokers: [`${process.env.kafkaHost}:${process.env.kafkaPort}`]
 });
 
 const consumer = kafka.consumer({ groupId: 'default' })
