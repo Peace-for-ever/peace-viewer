@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Peace-for-ever/peace-viewer#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "kafkajs": "^1.15.0"
   }
 }

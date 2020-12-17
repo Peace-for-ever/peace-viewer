@@ -31,6 +31,16 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
+    let socket = new WebSocket("ws://localhost:3000/events");
+    socket.onopen = function(e) {
+      console.log("[open] Connection established");
+      console.log("Sending to server");
+    };
+
+    socket.onmessage = function(event) {
+      console.log(`[message] Data received from server: ${event.data}`);
+    };
+
     if(!Detector.webgl){
       Detector.addGetWebGLMessage();
     } else {
