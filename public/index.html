@@ -31,42 +31,32 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    let socket = new WebSocket("ws://localhost:3000/events");
-    socket.onopen = function(e) {
-      console.log("[open] Connection established");
-      console.log("Sending to server");
-    };
-
-    socket.onmessage = function(event) {
-      console.log(`[message] Data received from server: ${event.data}`);
-    };
-
     if(!Detector.webgl){
       Detector.addGetWebGLMessage();
     } else {
 
       var container = document.getElementById('container');
-      var globe = new DAT.Globe(container);
+      var globe = new DAT.Globe(container, {
+        animated: false
+      });
       
       TWEEN.start();
 
-      let data = [];
-      function getRandomArbitrary(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+      let socket = new WebSocket("ws://localhost:3000/events");
+      socket.onopen = function(e) {
+        console.info("[open] Connection established");
+      };
 
-      for(let i = 0; i < 500; i++)
-      {
-        let lat = getRandomArbitrary(-180, 180);
-        let lon = getRandomArbitrary(-180, 180);
-        data.push(lat, lon, getRandomArbitrary(0, 1));
-      }
-
-      globe.addData(data, {
-        format: 'magnitude',
-        name: 'test'
-      });
-      globe.createPoints();
+      socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        globe.addData(data, {
+          format: 'magnitude',
+          name: 'test'
+        });
+        globe.createPoints();
+        globe.animate();
+      };
+      
       globe.animate();
     }
 

@@ -18,7 +18,7 @@ DAT.Globe = function(container, opts) {
   
   var colorFn = opts.colorFn || function(x) {
     var c = new THREE.Color();
-    c.setHSL( ( 0.6 - ( x * 0.5 ) ), 1.0, 0.5 );
+    c.setHSL( ( 0.6 - ( x * 0.6 ) ), 1.0, 0.4 );
     return c;
   };
   var imgDir = opts.imgDir || '/';
@@ -218,6 +218,9 @@ DAT.Globe = function(container, opts) {
   };
 
   function createPoints() {
+    if(this.points != null) {
+      scene.remove(this.points);
+    }
     if (this._baseGeometry !== undefined) {
       if (this.is_animated === false) {
         this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
