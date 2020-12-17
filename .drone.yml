@@ -1,0 +1,26 @@
+name: default
+
+kind: pipeline
+type: docker
+
+steps:
+
+- name: compile
+  image: mhart/alpine-node
+  commands:
+    - npm install
+  when:
+    branch:
+    - main
+
+- name: push dockerhub  
+  image: plugins/docker
+  settings:
+    repo: thomaslacaze/peace-viewer
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    branch:
+    - main
