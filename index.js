@@ -16,12 +16,6 @@ app.ws('/events', function(ws, req) {
 
 });
 
-setInterval(() => {
-	eventsWs.clients.forEach((ws) => {
-		ws.send('Hello !');
-	})
-}, 1000);
-
 const run = async () => {
 	await consumer.connect();
 	await consumer.subscribe({ topic: process.env.kafkaTopic || 'records', fromBeginning: false });
