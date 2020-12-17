@@ -1,0 +1,14 @@
+name: default
+
+kind: pipeline
+type: docker
+
+steps:
+
+- name: compile
+  image: mhart/alpine-node
+  commands:
+    - npm install
+  when:
+    branch:
+    - main
