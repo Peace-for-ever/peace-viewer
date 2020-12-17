@@ -16,14 +16,28 @@ app.ws('/events', function(ws, req) {
 
 });
 
+const data = new Map();
+
 const run = async () => {
 	await consumer.connect();
 	await consumer.subscribe({ topic: process.env.kafkaTopic || 'records', fromBeginning: false });
 
 	await consumer.run({
 		eachBatch: async ({ batch }) => {
+
+			batch.messages.forEach((msg) => {
+				const json = JSON.parse(msg.value.toString());
+				if(data.has(json.country)) {
+					data[json.country].push(json);
+				}
+				else {
+					data[json.country] = [json];
+				}
+
+			});
+
 			eventsWs.clients.forEach((ws) => {
-				ws.send(batch.messages);
+				ws.send(data);
 			});
 		}
 	})
