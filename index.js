@@ -5,13 +5,11 @@ const eventsWs = expressWs.getWss('/');
 const { Kafka } = require('kafkajs');
 const { Database, aql } = require("arangojs");
 
-const topicName = process.env.kafkaRecordTopic;
-
 const db = new Database({
-	url: process.env.arangoHost,
+	url: `http://${process.env.arangoHost}`,
 	auth: { username: process.env.arangoUser, password: process.env.arangoPassword },
 });
-const collection = db.collection(topicName);
+const collection = db.collection(process.env.kafkaRecordTopic);
 
 const kafka = new Kafka({
 	brokers: [`${process.env.kafkaHost}:${process.env.kafkaPort}`]
@@ -73,7 +71,7 @@ const run = async () => {
 	sendData();
 
 	await consumer.connect();
-	await consumer.subscribe({ topic: topicName, fromBeginning: false });
+	await consumer.subscribe({ topic: process.env.kafkaRecordTopic, fromBeginning: false });
 
 	await consumer.run({
 		eachBatch: async ({ batch }) => {
