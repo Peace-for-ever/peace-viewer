@@ -90,4 +90,4 @@ const run = async () => {
 
 run().catch(console.error);
  
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)
