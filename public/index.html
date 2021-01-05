@@ -41,7 +41,7 @@
       TWEEN.start();
 
       setTimeout(() => {
-        let socket = new WebSocket("ws://localhost:3001/events");
+        let socket = new WebSocket("ws://localhost:4000/events");
         socket.onopen = function(e) {
           console.info("[open] Connection established");
         };
